@@ -30,51 +30,51 @@ const ProblemSpace: React.FC = () => {
 
   const problems = [
     {
-      title: "Diagnostic Errors Cost Lives",
+      title: "India's Medical Error Epidemic",
       icon: AlertTriangle,
       color: "text-red-400",
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/30",
       stats: [
-        { label: "Annual Deaths", value: "40,000-80,000", subtitle: "preventable in U.S. hospitals" },
-        { label: "Error Rate", value: "23%", subtitle: "of hospitalized patients" },
-        { label: "Malpractice Claims", value: "75%", subtitle: "of radiology claims" }
+        { label: "Annual Medical Errors", value: "5.2M", subtitle: "in India every year" },
+        { label: "Preventable Deaths", value: "5M", subtitle: "deaths per year" },
+        { label: "Error Increase", value: "110%", subtitle: "rise in recent decade" }
       ],
-      description: "Single-modality systems miss critical patterns, leading to misdiagnosis and patient harm."
+      description: "India faces a hidden epidemic of medical errors, with 70% of emergency deaths due to mismanagement, not incompetence."
     },
     {
-      title: "Biosignal Quality Challenges",
-      icon: Activity,
+      title: "Urban-Rural Healthcare Divide",
+      icon: Users,
       color: "text-orange-400",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30",
       stats: [
-        { label: "Signal Amplitude", value: "50-100 µV", subtitle: "EEG signals" },
-        { label: "Noise Ratio", value: "10x", subtitle: "larger than target signals" },
-        { label: "Artifact Impact", value: "92%", subtitle: "SNR improvement needed" }
+        { label: "Rural Population", value: "65%", subtitle: "of India's population" },
+        { label: "Urban Doctors", value: "70%", subtitle: "doctors in cities only" },
+        { label: "Diagnostic Delays", value: "10 months", subtitle: "for complex conditions" }
       ],
-      description: "Low-amplitude signals easily corrupted by motion artifacts and environmental noise."
+      description: "65% of India lives in rural areas with limited specialist access, while 70% of doctors practice in cities."
     },
     {
-      title: "Integration Complexity",
-      icon: Database,
+      title: "Biosignal Quality Crisis",
+      icon: Activity,
       color: "text-blue-400",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       stats: [
-        { label: "Data Volume", value: "2.5 exabytes", subtitle: "generated daily" },
-        { label: "Missing Modalities", value: "40%", subtitle: "of research cases" },
-        { label: "Integration Gap", value: "20-30%", subtitle: "accuracy improvement possible" }
+        { label: "EEG Signal Size", value: "50-100 µV", subtitle: "extremely low amplitude" },
+        { label: "Noise Ratio", value: "10x", subtitle: "larger than target signals" },
+        { label: "Global Error Rate", value: "23%", subtitle: "of hospitalized patients" }
       ],
-      description: "Heterogeneous data sources from wearables, imaging, and clinical records are difficult to integrate."
+      description: "EEG signals are 10x smaller than noise, leading to misdiagnosis and repeated procedures in remote monitoring."
     }
   ];
 
   const diseaseStats = [
-    { condition: "Myocardial Infarction", errorRate: "1.5%", severity: "Low", color: "text-green-400" },
-    { condition: "Stroke (Typical)", errorRate: "17%", severity: "Medium", color: "text-yellow-400" },
-    { condition: "Stroke (Atypical)", errorRate: "40%", severity: "High", color: "text-red-400" },
-    { condition: "Spinal Abscess", errorRate: "56-75%", severity: "Critical", color: "text-red-500" }
+    { condition: "Surgical Errors (India)", errorRate: "80%", severity: "Critical", color: "text-red-500" },
+    { condition: "Emergency Mismanagement", errorRate: "70%", severity: "High", color: "text-red-400" },
+    { condition: "Medication Errors (ICU)", errorRate: "6.11%", severity: "Medium", color: "text-yellow-400" },
+    { condition: "Diagnostic Delays", errorRate: "10 months", severity: "Critical", color: "text-red-500" }
   ];
 
   return (
@@ -97,14 +97,14 @@ const ProblemSpace: React.FC = () => {
             Critical Healthcare Challenge
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Why Medical Sensor Fusion is{' '}
+            India's Healthcare Crisis:{' '}
             <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-              Critical
+              5.2 Million Medical Errors Annually
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Healthcare systems struggle to transform massive sensor data into reliable clinical insights. 
-            Single-modality limitations, signal quality issues, and integration complexity create critical gaps in patient care.
+            India faces a hidden epidemic of medical errors affecting millions. 65% of India's population lives in rural areas with limited specialist access, 
+            while 70% of doctors practice in cities. Our sensor fusion technology bridges this critical gap.
           </p>
         </motion.div>
 

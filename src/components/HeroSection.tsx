@@ -27,10 +27,10 @@ const HeroSection: React.FC = () => {
   }, []);
 
   const stats = [
-    { label: "Remote Patient Monitoring Market", value: "$88B", year: "by 2035", icon: TrendingUp, color: "text-blue-400" },
-    { label: "Diagnostic Errors", value: "23%", subtitle: "of hospitalized patients", icon: AlertTriangle, color: "text-red-400" },
-    { label: "Fusion Confidence", value: "87%", subtitle: "under real-world noise", icon: CheckCircle, color: "text-green-400" },
-    { label: "Processing Latency", value: "4.3ms", subtitle: "real-time capability", icon: Zap, color: "text-purple-400" }
+    { label: "Medical Errors in India", value: "5.2M", year: "annually", icon: AlertTriangle, color: "text-red-400" },
+    { label: "India RPM Market", value: "$5.67B", year: "by 2035", icon: TrendingUp, color: "text-blue-400" },
+    { label: "Rural Population", value: "65%", subtitle: "without specialist access", icon: Users, color: "text-orange-400" },
+    { label: "Fusion Confidence", value: "87%", subtitle: "under real-world noise", icon: CheckCircle, color: "text-green-400" }
   ];
 
   return (
@@ -62,7 +62,7 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-primary/30 text-primary">
-                🏥 Medical Sensor Fusion Research
+                🇮🇳 India Healthcare Crisis Solution
               </Badge>
             </motion.div>
 
@@ -73,15 +73,15 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="space-y-4"
             >
-              <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Medical Sensor Fusion for{' '}
-                <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-                  Next-Generation Healthcare
-                </span>
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Transforming noisy biosignals into confident clinical insights through intelligent multi-modal fusion
-              </p>
+            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+              Medical Sensor Fusion for{' '}
+              <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+                India's Healthcare Crisis
+              </span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              From 5.2 Million Annual Medical Errors to Precision Care: Transforming India's Healthcare Through Intelligent Multi-Modal Sensor Fusion
+            </p>
             </motion.div>
 
             {/* Key Stats */}

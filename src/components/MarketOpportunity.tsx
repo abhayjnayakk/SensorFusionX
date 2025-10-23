@@ -34,37 +34,37 @@ const MarketOpportunity: React.FC = () => {
 
   const marketSegments = [
     {
-      title: "Sensor Fusion Market",
-      value: "$7.6B",
-      projection: "$28.2B (2033)",
-      cagr: "15.74%",
+      title: "India RPM Market",
+      value: "$1.25B",
+      projection: "$5.67B (2035)",
+      cagr: "14.74%",
       color: "text-blue-400",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30"
     },
     {
-      title: "Remote Patient Monitoring",
-      value: "$7.2B",
-      projection: "$88B (2035)",
-      cagr: "25%",
+      title: "India Wearable Medical",
+      value: "$1.04B",
+      projection: "$4.2B (2030)",
+      cagr: "15.5%",
       color: "text-green-400",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30"
     },
     {
-      title: "Wearable Medical Devices",
-      value: "$42.68B",
-      projection: "$427B (2034)",
-      cagr: "25.9%",
+      title: "India Telemedicine",
+      value: "$1.54B",
+      projection: "$5.4B (2030)",
+      cagr: "20.75%",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/30"
     },
     {
-      title: "Medical Sensors",
-      value: "$3.06B",
-      projection: "$4.48B (2030)",
-      cagr: "7.9%",
+      title: "Global Sensor Fusion",
+      value: "$7.6B",
+      projection: "$28.2B (2033)",
+      cagr: "15.74%",
       color: "text-orange-400",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30"
@@ -116,8 +116,8 @@ const MarketOpportunity: React.FC = () => {
       status: "Current MVP",
       icon: CheckCircle,
       color: "text-green-400",
-      description: "ECG + EEG + EMG fusion with real-time processing",
-      features: ["Remote cardiac monitoring", "Neurological diagnostics", "Rehabilitation monitoring"]
+      description: "ECG + EEG + EMG fusion for rural India remote monitoring",
+      features: ["NDHM integration", "eSanjeevani compatibility", "Rural telemedicine"]
     },
     {
       phase: "Phase 2: Multi-Modal Clinical",
@@ -125,8 +125,8 @@ const MarketOpportunity: React.FC = () => {
       status: "Next Development",
       icon: Rocket,
       color: "text-blue-400",
-      description: "Biosignals + Medical Imaging integration",
-      features: ["MRI/CT/Ultrasound fusion", "Clinical data integration", "Genomic data fusion"]
+      description: "Biosignals + Medical Imaging with Ayushman Bharat",
+      features: ["Hospital integration", "PLI scheme manufacturing", "Clinical validation"]
     },
     {
       phase: "Phase 3: Healthcare System",
@@ -134,17 +134,17 @@ const MarketOpportunity: React.FC = () => {
       status: "Future Vision",
       icon: Globe,
       color: "text-purple-400",
-      description: "EHR integration and telehealth connectivity",
-      features: ["EHR integration", "Telehealth platforms", "AI decision support"]
+      description: "National Digital Health Mission integration",
+      features: ["EHR connectivity", "Population health", "Government deployment"]
     },
     {
-      phase: "Phase 4: Population Health",
+      phase: "Phase 4: Global Leadership",
       timeline: "2027+",
       status: "Long-term Vision",
       icon: Target,
       color: "text-orange-400",
-      description: "AI-powered population health platform",
-      features: ["Population analytics", "Predictive healthcare", "Global health insights"]
+      description: "India's solution for developing countries",
+      features: ["Global export", "Technology transfer", "4B+ people served"]
     }
   ];
 
@@ -168,14 +168,14 @@ const MarketOpportunity: React.FC = () => {
             Market Opportunity
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Beyond Biomedical Signals:{' '}
+            India's Healthcare Technology Leadership:{' '}
             <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-              Medical Sensor Fusion Vision
+              From Crisis to Global Innovation
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Expanding from our validated biomedical signals MVP to the entire medical sensor domain, 
-            unlocking a $600B+ healthcare technology convergence opportunity.
+            India's $3.8B healthcare technology market growing to $15.3B by 2030, with government support through 
+            National Digital Health Mission, PLI schemes, and ₹500 crore medical device investment.
           </p>
         </motion.div>
 
@@ -238,10 +238,10 @@ const MarketOpportunity: React.FC = () => {
                 className="mt-8 text-center p-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg border border-green-500/20"
               >
                 <h3 className="text-2xl font-bold text-foreground mb-2">
-                  Total Addressable Market: <span className="text-green-400">$600B+</span>
+                  India TAM: <span className="text-green-400">$15.3B</span> | Global TAM: <span className="text-blue-400">$600B+</span>
                 </h3>
                 <p className="text-muted-foreground">
-                  Healthcare technology convergence by 2035
+                  India's healthcare technology leadership with global scalability
                 </p>
               </motion.div>
             </CardContent>
@@ -367,16 +367,16 @@ const MarketOpportunity: React.FC = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-green-400 mb-2">20-30%</div>
-                  <div className="text-sm text-muted-foreground">Reduction in diagnostic errors</div>
+                  <div className="text-4xl font-bold text-green-400 mb-2">5.2M → 1.5M</div>
+                  <div className="text-sm text-muted-foreground">Annual medical errors in India</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">15-20%</div>
-                  <div className="text-sm text-muted-foreground">Reduction in hospital readmissions</div>
+                  <div className="text-4xl font-bold text-blue-400 mb-2">65%</div>
+                  <div className="text-sm text-muted-foreground">Rural population with specialist access</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-purple-400 mb-2">25%</div>
-                  <div className="text-sm text-muted-foreground">Cost reduction vs. in-person care</div>
+                  <div className="text-4xl font-bold text-purple-400 mb-2">₹500Cr</div>
+                  <div className="text-sm text-muted-foreground">Government medical device investment</div>
                 </div>
               </div>
               

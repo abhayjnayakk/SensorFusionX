@@ -11,6 +11,7 @@ import HeroSection from "@/components/HeroSection";
 import ProblemSpace from "@/components/ProblemSpace";
 import SolutionFramework from "@/components/SolutionFramework";
 import BiomedicalMVP from "@/components/BiomedicalMVP";
+import IndiaHealthcareContext from "@/components/IndiaHealthcareContext";
 import MarketOpportunity from "@/components/MarketOpportunity";
 
 const Index = () => {
@@ -29,6 +30,9 @@ const Index = () => {
 
       {/* Biomedical MVP Section */}
       <BiomedicalMVP />
+
+      {/* India Healthcare Context */}
+      <IndiaHealthcareContext />
 
       {/* Live Demo Section */}
       <section className="py-20 bg-gradient-to-b from-background to-muted/20">
@@ -118,15 +122,15 @@ const Index = () => {
               <h3 className="text-2xl font-bold text-foreground">Biomedical Sensor Fusion Research</h3>
             </div>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Transforming healthcare through intelligent multi-modal sensor fusion. 
-              From noisy biosignals to confident clinical insights—real-time, validated, reliable.
+              Transforming India's healthcare crisis through intelligent multi-modal sensor fusion. 
+              From 5.2M annual medical errors to precision care—real-time, validated, reliable.
             </p>
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <span>© 2024 Team Utkarsh</span>
               <span>•</span>
-              <span>Ongoing Research Project</span>
+              <span>India Healthcare Innovation</span>
               <span>•</span>
-              <span>Multi-modal Signal Processing</span>
+              <span>NDHM Compatible</span>
             </div>
           </div>
         </div>
