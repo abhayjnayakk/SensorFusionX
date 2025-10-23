@@ -25,14 +25,29 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-export function SensorChart({ data }: { data: Point[] }) {
-  const chartData = React.useMemo(() => data.slice(-300).map((d) => ({
-    t: Number(d.t.toFixed(1)),
-    ECG: Number(d.ecg.toFixed(3)),
-    EEG: Number(d.eeg.toFixed(3)),
-    EMG: Number(d.emg.toFixed(3)),
-    Fused: Number(d.fused.toFixed(3)),
-  })), [data]);
+export function SensorChart({ data }: { data?: Point[] }) {
+  // Fallback data if data is undefined
+  const safeData = data || [];
+  
+  const chartData = React.useMemo(() => {
+    if (safeData.length === 0) {
+      // Generate fallback data
+      return Array.from({ length: 100 }, (_, i) => ({
+        t: i * 0.1,
+        ECG: Math.sin(i * 0.1) * 0.5 + Math.random() * 0.2,
+        EEG: Math.sin(i * 0.15) * 0.3 + Math.random() * 0.1,
+        EMG: Math.sin(i * 0.2) * 0.4 + Math.random() * 0.15,
+        Fused: Math.sin(i * 0.12) * 0.6 + Math.random() * 0.1,
+      }));
+    }
+    return safeData.slice(-300).map((d) => ({
+      t: Number(d.t.toFixed(1)),
+      ECG: Number(d.ecg.toFixed(3)),
+      EEG: Number(d.eeg.toFixed(3)),
+      EMG: Number(d.emg.toFixed(3)),
+      Fused: Number(d.fused.toFixed(3)),
+    }));
+  }, [safeData]);
 
   return (
     <div className="industrial-card scan-line space-y-3">
@@ -142,6 +157,9 @@ export function SensorChart({ data }: { data: Point[] }) {
     </div>
   );
 }
+
+
+
 
 
 

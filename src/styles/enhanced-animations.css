@@ -1,0 +1,317 @@
+/* Enhanced Animations for React Bits Integration */
+
+/* Aurora Background Animations */
+@keyframes auroraShift {
+  0% { 
+    transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateX(-30%) translateY(-30%) rotate(90deg) scale(1.1);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translateX(-20%) translateY(-20%) rotate(180deg) scale(1.2);
+    opacity: 0.4;
+  }
+  75% { 
+    transform: translateX(-40%) translateY(-40%) rotate(270deg) scale(1.1);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateX(-50%) translateY(-50%) rotate(360deg) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes metricPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes blurReveal {
+  0% { 
+    filter: blur(20px);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  50% { 
+    filter: blur(10px);
+    opacity: 0.5;
+    transform: translateY(10px);
+  }
+  100% { 
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes countUp {
+  0% { 
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes staggerReveal {
+  0% { 
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+@keyframes hoverLift {
+  0% { 
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  100% { 
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+@keyframes dataStream {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% { 
+    opacity: 1;
+  }
+  90% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes signalPulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Utility Classes */
+.aurora-shift {
+  animation: auroraShift 20s infinite linear;
+}
+
+.metric-pulse {
+  animation: metricPulse 2s infinite ease-in-out;
+}
+
+.blur-reveal {
+  animation: blurReveal 1.5s ease-out forwards;
+}
+
+.count-up {
+  animation: countUp 0.8s ease-out forwards;
+}
+
+.stagger-reveal {
+  animation: staggerReveal 0.6s ease-out forwards;
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  animation: hoverLift 0.3s ease-out forwards;
+}
+
+.glow-pulse {
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+.data-stream {
+  animation: dataStream 4s infinite linear;
+}
+
+.signal-pulse {
+  animation: signalPulse 2s infinite ease-in-out;
+}
+
+/* Enhanced Card Animations */
+.enhanced-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.enhanced-card:hover::before {
+  left: 100%;
+}
+
+.enhanced-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* BlurText Animation */
+.blur-text {
+  animation: blurReveal 1.5s ease-out forwards;
+}
+
+.blur-text-char {
+  display: inline-block;
+  animation: blurReveal 0.5s ease-out forwards;
+}
+
+/* CountUp Animation */
+.count-up-number {
+  animation: countUp 0.8s ease-out forwards;
+}
+
+/* Staggered List Animation */
+.stagger-item {
+  animation: staggerReveal 0.6s ease-out forwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive Animations */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-shift,
+  .metric-pulse,
+  .blur-reveal,
+  .count-up,
+  .stagger-reveal,
+  .hover-lift,
+  .glow-pulse,
+  .data-stream,
+  .signal-pulse {
+    animation: none;
+  }
+  
+  .enhanced-card {
+    transition: none;
+  }
+  
+  .enhanced-card:hover {
+    transform: none;
+  }
+}
+
+/* Performance Optimizations */
+.enhanced-card,
+.blur-text,
+.count-up-number,
+.stagger-item {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* GPU Acceleration */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Smooth Transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Hover Effects */
+.enhanced-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-hover:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Focus States for Accessibility */
+.enhanced-focus:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .enhanced-card {
+    border: 2px solid currentColor;
+  }
+  
+  .glow-pulse {
+    animation: none;
+  }
+}

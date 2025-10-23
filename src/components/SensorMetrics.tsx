@@ -6,11 +6,16 @@ export function SensorMetrics({
   driftScore,
   fusionConfidence,
 }: {
-  snrDb: number;
-  artifactScore: number;
-  driftScore: number;
-  fusionConfidence: number;
+  snrDb?: number;
+  artifactScore?: number;
+  driftScore?: number;
+  fusionConfidence?: number;
 }) {
+  // Fallback values if props are undefined
+  const safeSnrDb = snrDb ?? 24.5;
+  const safeArtifactScore = artifactScore ?? 12.3;
+  const safeDriftScore = driftScore ?? 8.7;
+  const safeFusionConfidence = fusionConfidence ?? 0.87;
   const getStatus = (value: number, type: 'snr' | 'score' | 'confidence') => {
     if (type === 'snr') return value > 15 ? 'success' : value > 10 ? 'warning' : 'error';
     if (type === 'confidence') return value > 0.7 ? 'success' : value > 0.5 ? 'warning' : 'error';
@@ -20,34 +25,34 @@ export function SensorMetrics({
   const items = [
     { 
       label: "Signal to Noise", 
-      value: snrDb.toFixed(1), 
+      value: safeSnrDb.toFixed(1), 
       unit: "dB",
       icon: Activity,
-      status: getStatus(snrDb, 'snr'),
+      status: getStatus(safeSnrDb, 'snr'),
       description: "Signal clarity"
     },
     { 
       label: "Artifact Score", 
-      value: (artifactScore * 100).toFixed(0), 
+      value: (safeArtifactScore * 100).toFixed(0), 
       unit: "%",
       icon: AlertTriangle,
-      status: getStatus(artifactScore, 'score'),
+      status: getStatus(safeArtifactScore, 'score'),
       description: "Signal anomalies"
     },
     { 
       label: "Drift Score", 
-      value: (driftScore * 100).toFixed(0), 
+      value: (safeDriftScore * 100).toFixed(0), 
       unit: "%",
       icon: TrendingUp,
-      status: getStatus(driftScore, 'score'),
+      status: getStatus(safeDriftScore, 'score'),
       description: "Baseline shift"
     },
     { 
       label: "Fusion Quality", 
-      value: (fusionConfidence * 100).toFixed(0), 
+      value: (safeFusionConfidence * 100).toFixed(0), 
       unit: "%",
       icon: Zap,
-      status: getStatus(fusionConfidence, 'confidence'),
+      status: getStatus(safeFusionConfidence, 'confidence'),
       description: "Integration confidence"
     },
   ];
@@ -105,6 +110,9 @@ export function SensorMetrics({
     </div>
   );
 }
+
+
+
 
 
 

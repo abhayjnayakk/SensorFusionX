@@ -6,7 +6,7 @@ import path from "path";
 export default defineConfig(() => ({
   server: {
     host: "::",
-    port: 8080,
+    port: 8081,
   },
   // Set base path for GitHub Pages: https://<user>.github.io/SensorFusionQ_Deploy/
   base: "/SensorFusionQ_Deploy/",
