@@ -15,7 +15,7 @@ import {
   AlertTriangle,
   CheckCircle
 } from 'lucide-react';
-import Hyperspeed from './Hyperspeed';
+// Hyperspeed background removed for performance
 
 const HeroSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,10 +39,7 @@ const HeroSection: React.FC = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Hyperspeed Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <Hyperspeed />
-      </div>
+      {/* Background removed for performance */}
 
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
