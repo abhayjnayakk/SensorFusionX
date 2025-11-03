@@ -17,7 +17,7 @@ export function useSensorSimulation(): UseSensorSimulationResult {
 
   const tick = React.useCallback(() => {
     const dt = 1 / 60; // simulation step
-    const samplesPerTick = 1.67; // ~100 Hz internal rate for automotive sensors
+    const samplesPerTick = 1.5; // slightly lower gen cost
     const newSamples: SensorSample[] = [];
     for (let i = 0; i < Math.round(samplesPerTick); i++) {
       tRef.current += dt / samplesPerTick;
@@ -57,10 +57,10 @@ export function useSensorSimulation(): UseSensorSimulationResult {
       
       newSamples.push({ t, lidar, radar, camera, imu, gps, fused });
     }
-    // Batch UI updates at ~20fps to reduce re-renders
+    // Batch UI updates at ~15fps to reduce re-renders further
     setBuffer((prev) => {
       const next = [...prev, ...newSamples];
-      const maxPoints = 1000; // cap buffer size for rendering performance
+      const maxPoints = 600; // tighter cap for smoother charts
       if (next.length > maxPoints) next.splice(0, next.length - maxPoints);
       return next;
     });
@@ -69,13 +69,13 @@ export function useSensorSimulation(): UseSensorSimulationResult {
   const start = React.useCallback(() => {
     if (timerRef.current != null) return;
     setIsRunning(true);
-    // Run simulation at 60Hz but only trigger React updates at ~20Hz
+    // Run simulation at 60Hz but only trigger React updates at ~15Hz
     let subStep = 0;
     timerRef.current = window.setInterval(() => {
       // accumulate 3 sim steps per UI tick
       for (let i = 0; i < 3; i++) tick();
       subStep = (subStep + 1) % 3;
-    }, 1000 / 20);
+    }, 1000 / 15);
   }, [tick]);
 
   const stop = React.useCallback(() => {
@@ -92,7 +92,7 @@ export function useSensorSimulation(): UseSensorSimulationResult {
   }, [start, stop]);
 
   // Compute metrics on a smaller slice to reduce CPU
-  const metrics = React.useMemo(() => computeQualityMetrics(buffer.slice(-500)), [buffer]);
+  const metrics = React.useMemo(() => computeQualityMetrics(buffer.slice(-300)), [buffer]);
 
   return { buffer, metrics, start, stop, isRunning };
 }

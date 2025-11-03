@@ -25,7 +25,7 @@ const CustomTooltip = React.memo(({ active, payload }: any) => {
   return null;
 });
 
-export function SensorChart({ data }: { data?: Point[] }) {
+function SensorChartBase({ data }: { data?: Point[] }) {
   // Fallback data if data is undefined
   const safeData = data || [];
   
@@ -42,7 +42,7 @@ export function SensorChart({ data }: { data?: Point[] }) {
         Fused: 20.0 * Math.sin(i * 0.06) + Math.random() * 2.0,
       }));
     }
-    return safeData.slice(-200).map((d) => ({
+    return safeData.slice(-120).map((d) => ({
       t: Number(d.t.toFixed(1)),
       LiDAR: Number(d.lidar.toFixed(1)),
       RADAR: Number(d.radar.toFixed(1)),
@@ -191,6 +191,8 @@ export function SensorChart({ data }: { data?: Point[] }) {
     </div>
   );
 }
+
+export const SensorChart = React.memo(SensorChartBase);
 
 
 

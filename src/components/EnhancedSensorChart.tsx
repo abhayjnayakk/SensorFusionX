@@ -123,7 +123,7 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
         Fused: 20.0 * Math.sin(i * 0.06) + Math.random() * 2.0,
       }));
     }
-    return safeData.slice(-200).map((d) => ({
+    return safeData.slice(-120).map((d) => ({
       t: Number(d.t.toFixed(1)),
       LiDAR: Number(d.lidar.toFixed(1)),
       RADAR: Number(d.radar.toFixed(1)),
