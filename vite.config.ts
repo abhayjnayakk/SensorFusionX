@@ -8,8 +8,8 @@ export default defineConfig(() => ({
     host: "::",
     port: 8081,
   },
-  // Set base path for GitHub Pages: https://<user>.github.io/SensorFusionQ_Deploy/
-  base: "/SensorFusionQ_Deploy/",
+  // Vercel deploy: serve from root
+  base: "/",
   plugins: [react()],
   resolve: {
     alias: {
