@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Performance Metrics and Validation for Sensor Fusion Framework
+Performance Metrics and Validation for Automotive Sensor Fusion Framework
 Addressing Reviewer Feedback with Concrete Measurements
 
 This module provides:
-1. SNR calculation and validation
-2. Artifact detection and scoring
-3. Latency and memory overhead measurements
-4. Real-time performance validation
-5. Quality-aware fusion metrics
+1. SNR calculation and validation for automotive sensors
+2. Noise/interference detection and scoring (occlusions, multipath, etc.)
+3. Latency and memory overhead measurements for real-time autonomous systems
+4. Real-time performance validation (< 10ms for autonomous vehicles)
+5. Quality-aware fusion metrics for perception stack
 """
 
 import numpy as np
@@ -27,8 +27,8 @@ class PerformanceMetrics:
     Comprehensive performance metrics for sensor fusion framework
     """
     
-    def __init__(self, sampling_rate=240, window_size=512):
-        self.sampling_rate = sampling_rate
+    def __init__(self, sampling_rate=100, window_size=512):
+        self.sampling_rate = sampling_rate  # 100 Hz typical for automotive sensors
         self.window_size = window_size
         self.metrics_history = []
         
@@ -128,9 +128,10 @@ class PerformanceMetrics:
         memory_info = process.memory_info()
         return memory_info.rss / 1024 / 1024  # MB
     
-    def validate_real_time_performance(self, processing_time, target_latency=5e-3):
+    def validate_real_time_performance(self, processing_time, target_latency=10e-3):
         """
-        Validate real-time performance requirements
+        Validate real-time performance requirements for autonomous vehicles
+        Target: < 10ms for perception stack (more lenient than biomedical due to lower update rates)
         """
         return {
             'processing_time_ms': processing_time * 1000,
@@ -246,9 +247,9 @@ class PerformanceMetrics:
     
     def _weighted_average_fusion(self, signals):
         """
-        Fixed-weight average fusion
+        Fixed-weight average fusion for automotive sensors
         """
-        weights = {'ecg': 0.5, 'eeg': 0.3, 'emg': 0.2}
+        weights = {'lidar': 0.35, 'radar': 0.30, 'camera': 0.20, 'imu': 0.10, 'gps': 0.05}
         fused_signal = np.zeros_like(list(signals.values())[0])
         
         for name, signal in signals.items():
@@ -279,7 +280,7 @@ class PerformanceMetrics:
         print("\n2. REAL-TIME PERFORMANCE VALIDATION:")
         print("-" * 60)
         
-        target_latency = 5e-3  # 5ms
+        target_latency = 10e-3  # 10ms for autonomous vehicles (perception stack)
         for method, results in benchmark_results.items():
             rt_validation = self.validate_real_time_performance(results['processing_time'])
             print(f"{method}:")
@@ -353,28 +354,39 @@ def main():
     """
     Main performance validation function
     """
-    print("Starting Performance Metrics Validation")
+    print("Starting Performance Metrics Validation for Automotive Sensor Fusion")
     print("="*50)
+    print("Target Application: Autonomous and Connected Vehicles")
     
     # Initialize performance metrics
     metrics = PerformanceMetrics()
     
     # Generate test signals
     duration = 5  # seconds
-    sampling_rate = 240
+    sampling_rate = 100  # 100 Hz for automotive sensors
     t = np.linspace(0, duration, int(duration * sampling_rate))
     
-    # Create synthetic biosignals
-    ecg = 0.8 * np.sin(2 * np.pi * 1.5 * t) + 0.1 * np.random.randn(len(t))
-    eeg = (0.4 * np.sin(2 * np.pi * 10 * t) + 
-           0.15 * np.sin(2 * np.pi * 22 * t + 0.5) + 
-           0.1 * np.random.randn(len(t)))
-    emg = 0.15 * np.random.randn(len(t)) + 0.05 * np.sin(2 * np.pi * 50 * t)
+    # Create synthetic automotive sensor signals
+    lidar = (50.0 * np.sin(2 * np.pi * 0.5 * t) + 
+             10.0 * np.sin(2 * np.pi * 2.0 * t + 0.3) + 
+             0.1 * 5.0 * np.random.randn(len(t)))
+    radar = (30.0 * np.sin(2 * np.pi * 1.0 * t) + 
+            15.0 * np.sin(2 * np.pi * 3.0 * t + 0.5) + 
+            0.1 * 3.0 * np.random.randn(len(t)))
+    camera = np.clip(0.7 * np.sin(2 * np.pi * 0.3 * t) + 
+                    0.2 * np.sin(2 * np.pi * 1.5 * t + 0.8) + 
+                    0.1 * 0.1 * np.random.randn(len(t)), 0, 1)
+    imu = (2.0 * np.sin(2 * np.pi * 0.8 * t) + 
+           0.5 * np.sin(2 * np.pi * 5.0 * t + 1.2) + 
+           0.1 * 0.3 * np.random.randn(len(t)))
+    gps = np.clip(0.9 * np.sin(2 * np.pi * 0.1 * t) + 
+                 0.1 * 0.15 * np.random.randn(len(t)), 0.3, 1.0)
     
-    signals = {'ecg': ecg, 'eeg': eeg, 'emg': emg}
+    signals = {'lidar': lidar, 'radar': radar, 'camera': camera, 'imu': imu, 'gps': gps}
     
-    # Create ground truth
-    ground_truth = 0.5 * ecg + 0.3 * eeg + 0.2 * emg
+    # Create ground truth (ideal fusion for autonomous perception)
+    ground_truth = (0.35 * lidar + 0.30 * radar + 0.20 * camera + 
+                   0.10 * imu + 0.05 * gps)
     
     # Run benchmark
     benchmark_results = metrics.benchmark_fusion_methods(signals, ground_truth)

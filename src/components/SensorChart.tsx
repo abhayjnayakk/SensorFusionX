@@ -2,9 +2,9 @@ import * as React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
 import { Activity } from "lucide-react";
 
-type Point = { t: number; ecg: number; eeg: number; emg: number; fused: number };
+type Point = { t: number; lidar: number; radar: number; camera: number; imu: number; gps: number; fused: number };
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = React.memo(({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-xl">
@@ -23,7 +23,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     );
   }
   return null;
-};
+});
 
 export function SensorChart({ data }: { data?: Point[] }) {
   // Fallback data if data is undefined
@@ -34,18 +34,22 @@ export function SensorChart({ data }: { data?: Point[] }) {
       // Generate fallback data
       return Array.from({ length: 100 }, (_, i) => ({
         t: i * 0.1,
-        ECG: Math.sin(i * 0.1) * 0.5 + Math.random() * 0.2,
-        EEG: Math.sin(i * 0.15) * 0.3 + Math.random() * 0.1,
-        EMG: Math.sin(i * 0.2) * 0.4 + Math.random() * 0.15,
-        Fused: Math.sin(i * 0.12) * 0.6 + Math.random() * 0.1,
+        LiDAR: 50.0 * Math.sin(i * 0.05) + Math.random() * 5.0,
+        RADAR: 30.0 * Math.sin(i * 0.1) + Math.random() * 3.0,
+        Camera: Math.max(0, Math.min(1, 0.7 * Math.sin(i * 0.03) + Math.random() * 0.1)),
+        IMU: 2.0 * Math.sin(i * 0.08) + Math.random() * 0.3,
+        GPS: Math.max(0.3, Math.min(1.0, 0.9 * Math.sin(i * 0.01) + Math.random() * 0.15)),
+        Fused: 20.0 * Math.sin(i * 0.06) + Math.random() * 2.0,
       }));
     }
-    return safeData.slice(-300).map((d) => ({
+    return safeData.slice(-200).map((d) => ({
       t: Number(d.t.toFixed(1)),
-      ECG: Number(d.ecg.toFixed(3)),
-      EEG: Number(d.eeg.toFixed(3)),
-      EMG: Number(d.emg.toFixed(3)),
-      Fused: Number(d.fused.toFixed(3)),
+      LiDAR: Number(d.lidar.toFixed(1)),
+      RADAR: Number(d.radar.toFixed(1)),
+      Camera: Number(d.camera.toFixed(3)),
+      IMU: Number(d.imu.toFixed(2)),
+      GPS: Number(d.gps.toFixed(3)),
+      Fused: Number(d.fused.toFixed(2)),
     }));
   }, [safeData]);
 
@@ -84,17 +88,25 @@ export function SensorChart({ data }: { data?: Point[] }) {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
             <defs>
-              <linearGradient id="ecgGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#00ffff" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#00ffff" stopOpacity={0}/>
+              <linearGradient id="lidarGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
               </linearGradient>
-              <linearGradient id="eegGradient" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="radarGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
                 <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
               </linearGradient>
-              <linearGradient id="emgGradient" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="cameraGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="imuGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3}/>
                 <stop offset="95%" stopColor="#a855f7" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="gpsGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="fusedGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
@@ -121,33 +133,55 @@ export function SensorChart({ data }: { data?: Point[] }) {
             />
             <Line 
               type="monotone" 
-              dataKey="ECG" 
-              stroke="#00ffff" 
-              dot={false} 
+              dataKey="LiDAR" 
+              stroke="#3b82f6" 
+              dot={false}
+              isAnimationActive={false}
               strokeWidth={2}
-              fill="url(#ecgGradient)"
+              fill="url(#lidarGradient)"
             />
             <Line 
               type="monotone" 
-              dataKey="EEG" 
+              dataKey="RADAR" 
               stroke="#10b981" 
-              dot={false} 
+              dot={false}
+              isAnimationActive={false}
               strokeWidth={2}
-              fill="url(#eegGradient)"
+              fill="url(#radarGradient)"
             />
             <Line 
               type="monotone" 
-              dataKey="EMG" 
-              stroke="#a855f7" 
-              dot={false} 
+              dataKey="Camera" 
+              stroke="#f59e0b" 
+              dot={false}
+              isAnimationActive={false}
               strokeWidth={2}
-              fill="url(#emgGradient)"
+              fill="url(#cameraGradient)"
+            />
+            <Line 
+              type="monotone" 
+              dataKey="IMU" 
+              stroke="#a855f7" 
+              dot={false}
+              isAnimationActive={false}
+              strokeWidth={2}
+              fill="url(#imuGradient)"
+            />
+            <Line 
+              type="monotone" 
+              dataKey="GPS" 
+              stroke="#06b6d4" 
+              dot={false}
+              isAnimationActive={false}
+              strokeWidth={2}
+              fill="url(#gpsGradient)"
             />
             <Line 
               type="monotone" 
               dataKey="Fused" 
               stroke="#ef4444" 
-              dot={false} 
+              dot={false}
+              isAnimationActive={false}
               strokeWidth={2.5}
               fill="url(#fusedGradient)"
             />

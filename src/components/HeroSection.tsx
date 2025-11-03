@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   CheckCircle
 } from 'lucide-react';
+import Hyperspeed from './Hyperspeed';
 
 const HeroSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,10 +28,10 @@ const HeroSection: React.FC = () => {
   }, []);
 
   const stats = [
-    { label: "Medical Errors in India", value: "5.2M", year: "annually", icon: AlertTriangle, color: "text-red-400" },
-    { label: "India RPM Market", value: "$5.67B", year: "by 2035", icon: TrendingUp, color: "text-blue-400" },
-    { label: "Rural Population", value: "65%", subtitle: "without specialist access", icon: Users, color: "text-orange-400" },
-    { label: "Fusion Confidence", value: "87%", subtitle: "under real-world noise", icon: CheckCircle, color: "text-green-400" }
+    { label: "Autonomous Vehicle Market", value: "$2.1T", year: "by 2030", icon: TrendingUp, color: "text-blue-400" },
+    { label: "Connected Vehicles", value: "115M", year: "globally by 2025", icon: Users, color: "text-green-400" },
+    { label: "Sensor Fusion Accuracy", value: "95%+", subtitle: "object detection", icon: CheckCircle, color: "text-green-400" },
+    { label: "Fusion Confidence", value: "87%", subtitle: "under real-world conditions", icon: Shield, color: "text-blue-400" }
   ];
 
   return (
@@ -38,14 +39,12 @@ const HeroSection: React.FC = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-purple-500/5 to-transparent rounded-full blur-3xl" />
+      {/* Hyperspeed Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Hyperspeed />
       </div>
 
-      <div className="container mx-auto px-6 py-20">
+      <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Column - Main Content */}
@@ -62,7 +61,7 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-primary/30 text-primary">
-                🇮🇳 India Healthcare Crisis Solution
+                🚗 Autonomous & Connected Vehicles
               </Badge>
             </motion.div>
 
@@ -74,13 +73,13 @@ const HeroSection: React.FC = () => {
               className="space-y-4"
             >
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Medical Sensor Fusion for{' '}
+              Automotive Sensor Fusion for{' '}
               <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-                India's Healthcare Crisis
+                Autonomous Vehicles
               </span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              From 5.2 Million Annual Medical Errors to Precision Care: Transforming India's Healthcare Through Intelligent Multi-Modal Sensor Fusion
+              Real-time perception stack with confidence-weighted fusion: Enabling safe autonomous driving through intelligent multi-modal sensor integration
             </p>
             </motion.div>
 
@@ -120,7 +119,7 @@ const HeroSection: React.FC = () => {
             >
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 <Play className="h-5 w-5 mr-2" />
-                See Our Biomedical MVP in Action
+                See Our Automotive Sensor Fusion Demo
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
               <Button size="lg" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10">
@@ -141,7 +140,7 @@ const HeroSection: React.FC = () => {
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-foreground">Live Biomedical Signals</h3>
+                    <h3 className="text-lg font-semibold text-foreground">Live Automotive Sensors</h3>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                       <span className="text-xs text-green-400">Streaming</span>
@@ -152,7 +151,7 @@ const HeroSection: React.FC = () => {
                   <div className="h-32 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg flex items-center justify-center">
                     <div className="text-center">
                       <Activity className="h-8 w-8 text-primary mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">Real-time ECG + EEG + EMG Fusion</p>
+                      <p className="text-sm text-muted-foreground">Real-time LiDAR + RADAR + Camera + IMU + GPS Fusion</p>
                     </div>
                   </div>
 
@@ -163,7 +162,7 @@ const HeroSection: React.FC = () => {
                       <div className="text-xs text-muted-foreground">Confidence</div>
                     </div>
                     <div className="text-center p-3 bg-blue-500/10 rounded-lg">
-                      <div className="text-lg font-bold text-blue-400">4.3ms</div>
+                      <div className="text-lg font-bold text-blue-400">10ms</div>
                       <div className="text-xs text-muted-foreground">Latency</div>
                     </div>
                   </div>

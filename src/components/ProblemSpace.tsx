@@ -8,8 +8,10 @@ import {
   Database, 
   Users, 
   TrendingDown,
-  Heart,
-  Brain,
+  Car,
+  Radio,
+  Radar,
+  Camera,
   Zap,
   Shield,
   BarChart3,
@@ -30,51 +32,51 @@ const ProblemSpace: React.FC = () => {
 
   const problems = [
     {
-      title: "India's Medical Error Epidemic",
+      title: "Sensor Occlusion & Multipath",
       icon: AlertTriangle,
       color: "text-red-400",
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/30",
       stats: [
-        { label: "Annual Medical Errors", value: "5.2M", subtitle: "in India every year" },
-        { label: "Preventable Deaths", value: "5M", subtitle: "deaths per year" },
-        { label: "Error Increase", value: "110%", subtitle: "rise in recent decade" }
+        { label: "LiDAR Occlusions", value: "40%", subtitle: "in urban environments" },
+        { label: "RADAR Multipath", value: "30%", subtitle: "false detections" },
+        { label: "Camera Failures", value: "25%", subtitle: "in adverse weather" }
       ],
-      description: "India faces a hidden epidemic of medical errors, with 70% of emergency deaths due to mismanagement, not incompetence."
+      description: "Individual sensors fail in critical scenarios—occlusions block LiDAR, multipath corrupts RADAR, weather degrades cameras."
     },
     {
-      title: "Urban-Rural Healthcare Divide",
-      icon: Users,
+      title: "Real-Time Processing Requirements",
+      icon: Zap,
       color: "text-orange-400",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30",
       stats: [
-        { label: "Rural Population", value: "65%", subtitle: "of India's population" },
-        { label: "Urban Doctors", value: "70%", subtitle: "doctors in cities only" },
-        { label: "Diagnostic Delays", value: "10 months", subtitle: "for complex conditions" }
+        { label: "Latency Target", value: "&lt; 10ms", subtitle: "for perception stack" },
+        { label: "Processing Rate", value: "100 Hz", subtitle: "sensor sampling rate" },
+        { label: "Compute Budget", value: "Tight", subtitle: "edge processing only" }
       ],
-      description: "65% of India lives in rural areas with limited specialist access, while 70% of doctors practice in cities."
+      description: "Autonomous vehicles require sub-10ms latency for perception decisions—any delay compromises safety."
     },
     {
-      title: "Biosignal Quality Crisis",
-      icon: Activity,
+      title: "Functional Safety Compliance",
+      icon: Shield,
       color: "text-blue-400",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       stats: [
-        { label: "EEG Signal Size", value: "50-100 µV", subtitle: "extremely low amplitude" },
-        { label: "Noise Ratio", value: "10x", subtitle: "larger than target signals" },
-        { label: "Global Error Rate", value: "23%", subtitle: "of hospitalized patients" }
+        { label: "ISO 26262 ASIL-D", value: "Required", subtitle: "for ADAS/AD systems" },
+        { label: "Certification Cost", value: "$5M+", subtitle: "per platform" },
+        { label: "Time to Market", value: "2-3 years", subtitle: "validation cycle" }
       ],
-      description: "EEG signals are 10x smaller than noise, leading to misdiagnosis and repeated procedures in remote monitoring."
+      description: "ISO 26262 functional safety (ASIL-D) requires extensive validation, redundancy, and toolchain qualification—critical barrier to market."
     }
   ];
 
-  const diseaseStats = [
-    { condition: "Surgical Errors (India)", errorRate: "80%", severity: "Critical", color: "text-red-500" },
-    { condition: "Emergency Mismanagement", errorRate: "70%", severity: "High", color: "text-red-400" },
-    { condition: "Medication Errors (ICU)", errorRate: "6.11%", severity: "Medium", color: "text-yellow-400" },
-    { condition: "Diagnostic Delays", errorRate: "10 months", severity: "Critical", color: "text-red-500" }
+  const sensorFailureStats = [
+    { condition: "LiDAR Occlusions", errorRate: "40%", severity: "High", color: "text-red-500" },
+    { condition: "Camera Weather Failures", errorRate: "25%", severity: "High", color: "text-red-400" },
+    { condition: "RADAR Multipath", errorRate: "30%", severity: "Medium", color: "text-yellow-400" },
+    { condition: "GPS Signal Loss", errorRate: "15%", severity: "Medium", color: "text-orange-400" }
   ];
 
   return (
@@ -94,17 +96,17 @@ const ProblemSpace: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <Badge variant="outline" className="mb-4 px-4 py-2 text-sm font-medium border-red-500/30 text-red-400">
-            Critical Healthcare Challenge
+            Critical Automotive Challenge
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            India's Healthcare Crisis:{' '}
+            Automotive Perception Challenges:{' '}
             <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-              5.2 Million Medical Errors Annually
+              Sensor Occlusion & Real-Time Requirements
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            India faces a hidden epidemic of medical errors affecting millions. 65% of India's population lives in rural areas with limited specialist access, 
-            while 70% of doctors practice in cities. Our sensor fusion technology bridges this critical gap.
+            Individual sensors fail in critical scenarios—occlusions block LiDAR, multipath corrupts RADAR, weather degrades cameras. 
+            Autonomous vehicles require sub-10ms latency with ISO 26262 ASIL-D compliance. Our sensor fusion technology overcomes these critical challenges.
           </p>
         </motion.div>
 
@@ -170,27 +172,27 @@ const ProblemSpace: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-bold text-foreground">
                 <Target className="h-6 w-6 text-red-400" />
-                Disease-Specific Diagnostic Error Rates
+                Sensor-Specific Failure Rates
               </CardTitle>
               <p className="text-muted-foreground">
-                Diagnostic accuracy varies dramatically across conditions, with some diseases having error rates exceeding 50%
+                Individual sensor failure rates vary significantly, with some scenarios causing 40%+ occlusion rates
               </p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {diseaseStats.map((disease, index) => (
+                {sensorFailureStats.map((sensor, index) => (
                   <motion.div
-                    key={disease.condition}
+                    key={sensor.condition}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.9 }}
                     transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
                     className="text-center p-4 bg-background/50 rounded-lg border border-border/50"
                   >
-                    <div className="text-sm text-muted-foreground mb-2">{disease.condition}</div>
-                    <div className={`text-2xl font-bold ${disease.color} mb-1`}>
-                      {disease.errorRate}
+                    <div className="text-sm text-muted-foreground mb-2">{sensor.condition}</div>
+                    <div className={`text-2xl font-bold ${sensor.color} mb-1`}>
+                      {sensor.errorRate}
                     </div>
-                    <div className="text-xs text-muted-foreground">{disease.severity} Risk</div>
+                    <div className="text-xs text-muted-foreground">{sensor.severity} Risk</div>
                   </motion.div>
                 ))}
               </div>
@@ -215,34 +217,34 @@ const ProblemSpace: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center p-6 bg-background/50 rounded-lg">
                   <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Brain className="h-8 w-8 text-red-400" />
+                    <Radar className="h-8 w-8 text-red-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Cognitive Errors</h3>
-                  <div className="text-3xl font-bold text-red-400 mb-2">65%</div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Sensor Occlusions</h3>
+                  <div className="text-3xl font-bold text-red-400 mb-2">40%</div>
                   <p className="text-sm text-muted-foreground">
-                    Anchoring bias, premature closure, confirmation bias
+                    LiDAR blocked, camera degraded, RADAR multipath
                   </p>
                 </div>
                 
                 <div className="text-center p-6 bg-background/50 rounded-lg">
                   <div className="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <XCircle className="h-8 w-8 text-orange-400" />
+                    <Zap className="h-8 w-8 text-orange-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Systemic Issues</h3>
-                  <div className="text-3xl font-bold text-orange-400 mb-2">40%</div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Latency Requirements</h3>
+                  <div className="text-3xl font-bold text-orange-400 mb-2">&lt; 10ms</div>
                   <p className="text-sm text-muted-foreground">
-                    Communication breakdowns, time pressures, lack of follow-up
+                    Real-time processing, edge compute, safety-critical timing
                   </p>
                 </div>
                 
                 <div className="text-center p-6 bg-background/50 rounded-lg">
                   <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Activity className="h-8 w-8 text-blue-400" />
+                    <Shield className="h-8 w-8 text-blue-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Signal Quality</h3>
-                  <div className="text-3xl font-bold text-blue-400 mb-2">Critical</div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Functional Safety</h3>
+                  <div className="text-3xl font-bold text-blue-400 mb-2">ASIL-D</div>
                   <p className="text-sm text-muted-foreground">
-                    Single-modality limitations, artifacts, noise contamination
+                    ISO 26262 compliance, redundancy, toolchain qualification
                   </p>
                 </div>
               </div>

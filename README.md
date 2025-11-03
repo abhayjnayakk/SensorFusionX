@@ -1,6 +1,6 @@
-# Biofusion Dash
+# Automotive Sensor Fusion Platform
 
-Modern Vite + React + TypeScript dashboard for biomedical sensor fusion and data quality visualization.
+Modern Vite + React + TypeScript dashboard for automotive sensor fusion and perception quality visualization for autonomous and connected vehicles.
 
 ## Getting Started
 
@@ -31,7 +31,7 @@ Steps:
 - Ensure your default branch is `main` or `master`.
 - On push, the workflow `.github/workflows/deploy.yml` will build and publish `dist/`.
 
-If your repository name is not `biofusion-dash`, update the `base` in `vite.config.ts` to `"/<your-repo>/"`.
+If your repository name is not `sensor-fusion-vehicles`, update the `base` in `vite.config.ts` to `"/<your-repo>/"`.
 
 ## Tech Stack
 - Vite

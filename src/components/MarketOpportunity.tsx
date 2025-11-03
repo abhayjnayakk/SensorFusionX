@@ -7,9 +7,11 @@ import {
   TrendingUp, 
   DollarSign, 
   Users, 
-  Heart, 
-  Brain, 
-  Activity,
+  Car,
+  Radio,
+  Radar,
+  Camera,
+  Navigation,
   ArrowRight,
   Target,
   BarChart3,
@@ -34,37 +36,37 @@ const MarketOpportunity: React.FC = () => {
 
   const marketSegments = [
     {
-      title: "India RPM Market",
-      value: "$1.25B",
-      projection: "$5.67B (2035)",
-      cagr: "14.74%",
+      title: "Automotive Sensor Fusion",
+      value: "$0.3B",
+      projection: "$3.3B (2030)",
+      cagr: "42.4%",
       color: "text-blue-400",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30"
     },
     {
-      title: "India Wearable Medical",
-      value: "$1.04B",
-      projection: "$4.2B (2030)",
-      cagr: "15.5%",
+      title: "ADAS Systems",
+      value: "$25B",
+      projection: "$65B (2030)",
+      cagr: "18.2%",
       color: "text-green-400",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30"
     },
     {
-      title: "India Telemedicine",
-      value: "$1.54B",
-      projection: "$5.4B (2030)",
-      cagr: "20.75%",
+      title: "Autonomous Vehicles",
+      value: "$12B",
+      projection: "$185B (2030)",
+      cagr: "32.5%",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/30"
     },
     {
       title: "Global Sensor Fusion",
-      value: "$7.6B",
-      projection: "$28.2B (2033)",
-      cagr: "15.74%",
+      value: "$8.5B",
+      projection: "$25.5B (2032)",
+      cagr: "14.06%",
       color: "text-orange-400",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30"
@@ -73,78 +75,78 @@ const MarketOpportunity: React.FC = () => {
 
   const targetApplications = [
     {
-      title: "Cardiac Care",
-      icon: Heart,
-      color: "text-red-400",
-      applications: ["Remote monitoring", "Arrhythmia detection", "Heart failure management"],
-      market: "$3B+ monitoring market"
-    },
-    {
-      title: "Neurology",
-      icon: Brain,
+      title: "Object Detection",
+      icon: Radar,
       color: "text-blue-400",
-      applications: ["Stroke prediction", "Epilepsy monitoring", "Cognitive assessment"],
-      market: "Critical diagnostic tool"
+      applications: ["Pedestrian detection", "Vehicle tracking", "Obstacle avoidance"],
+      market: "$3.3B market by 2030"
     },
     {
-      title: "Rehabilitation",
-      icon: Activity,
+      title: "Perception Stack",
+      icon: Camera,
       color: "text-green-400",
-      applications: ["Movement analysis", "Muscle function", "Prosthetic control"],
-      market: "Essential for recovery"
+      applications: ["Lane detection", "Traffic sign recognition", "3D scene reconstruction"],
+      market: "Core ADAS/AD technology"
     },
     {
-      title: "Aging Care",
-      icon: Users,
+      title: "Navigation",
+      icon: Navigation,
       color: "text-purple-400",
-      applications: ["Fall detection", "Chronic disease management", "Activity monitoring"],
-      market: "Growing elderly population"
+      applications: ["GPS fusion", "Dead reckoning", "Map matching"],
+      market: "Connected vehicle essential"
     },
     {
-      title: "Hospital Integration",
+      title: "Safety Systems",
       icon: Shield,
       color: "text-orange-400",
-      applications: ["ICU monitoring", "Post-op care", "Emergency triage"],
-      market: "Clinical workflow optimization"
+      applications: ["AEB (Automatic Emergency Braking)", "ACC (Adaptive Cruise Control)", "LKA (Lane Keep Assist)"],
+      market: "ISO 26262 ASIL-D required"
+    },
+    {
+      title: "Autonomous Driving",
+      icon: Car,
+      color: "text-red-400",
+      applications: ["Level 4-5 autonomy", "Robotaxi deployment", "Commercial AV"],
+      market: "12M vehicles by 2030"
     }
   ];
 
   const technologyRoadmap = [
     {
-      phase: "Phase 1: Biomedical Signals",
+      phase: "Phase 1: Sensor Fusion MVP",
       timeline: "2024-2025",
       status: "Current MVP",
       icon: CheckCircle,
       color: "text-green-400",
-      description: "ECG + EEG + EMG fusion for rural India remote monitoring",
-      features: ["NDHM integration", "eSanjeevani compatibility", "Rural telemedicine"]
+      description: "LiDAR + RADAR + Camera + IMU + GPS fusion for ADAS systems",
+      features: ["ISO 26262 compliance", "High-level fusion architecture", "Real-time &lt; 10ms latency"]
     },
     {
-      phase: "Phase 2: Multi-Modal Clinical",
+      phase: "Phase 2: Perception Stack",
       timeline: "2025-2026",
       status: "Next Development",
       icon: Rocket,
       color: "text-blue-400",
-      description: "Biosignals + Medical Imaging with Ayushman Bharat",
-      features: ["Hospital integration", "PLI scheme manufacturing", "Clinical validation"]
+      description: "Full perception pipeline with AI-driven fusion",
+      features: ["Object detection", "Scene understanding", "Tier 1 integration"]
     },
     {
-      phase: "Phase 3: Healthcare System",
+      phase: "Phase 3: Autonomous Vehicle",
       timeline: "2026-2027",
       status: "Future Vision",
       icon: Globe,
       color: "text-purple-400",
-      description: "National Digital Health Mission integration",
-      features: ["EHR connectivity", "Population health", "Government deployment"]
+      description: "Level 4-5 autonomous vehicle deployment",
+      features: ["OEM partnerships", "Robotaxi integration", "Commercial AV"]
     },
     {
-      phase: "Phase 4: Global Leadership",
+      phase: "Phase 4: Software-Defined Vehicle",
       timeline: "2027+",
       status: "Long-term Vision",
       icon: Target,
       color: "text-orange-400",
-      description: "India's solution for developing countries",
-      features: ["Global export", "Technology transfer", "4B+ people served"]
+      description: "Platform for Software-Defined Vehicle transformation",
+      features: ["Global OEM adoption", "SDV ecosystem", "Connected vehicle platform"]
     }
   ];
 
@@ -168,14 +170,14 @@ const MarketOpportunity: React.FC = () => {
             Market Opportunity
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            India's Healthcare Technology Leadership:{' '}
+            Automotive Sensor Fusion Market Leadership:{' '}
             <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-              From Crisis to Global Innovation
+              42.4% CAGR Growth Opportunity
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            India's $3.8B healthcare technology market growing to $15.3B by 2030, with government support through 
-            National Digital Health Mission, PLI schemes, and ₹500 crore medical device investment.
+            The automotive sensor fusion market growing from $0.3B (2023) to $3.3B by 2030, driven by ADAS adoption, 
+            autonomous vehicle development, and Software-Defined Vehicle (SDV) transformation.
           </p>
         </motion.div>
 
@@ -238,10 +240,10 @@ const MarketOpportunity: React.FC = () => {
                 className="mt-8 text-center p-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg border border-green-500/20"
               >
                 <h3 className="text-2xl font-bold text-foreground mb-2">
-                  India TAM: <span className="text-green-400">$15.3B</span> | Global TAM: <span className="text-blue-400">$600B+</span>
+                  Automotive TAM: <span className="text-green-400">$3.3B</span> | Global Sensor Fusion TAM: <span className="text-blue-400">$25.5B+</span>
                 </h3>
                 <p className="text-muted-foreground">
-                  India's healthcare technology leadership with global scalability
+                  Automotive sensor fusion leadership with 42.4% CAGR growth
                 </p>
               </motion.div>
             </CardContent>
@@ -262,7 +264,7 @@ const MarketOpportunity: React.FC = () => {
                 Target Applications
               </CardTitle>
               <p className="text-muted-foreground">
-                Expanding our framework across the entire medical sensor domain
+                Expanding our framework across the entire automotive sensor domain
               </p>
             </CardHeader>
             <CardContent>
@@ -308,7 +310,7 @@ const MarketOpportunity: React.FC = () => {
                 Technology Roadmap
               </CardTitle>
               <p className="text-muted-foreground">
-                Strategic expansion from biomedical signals to full medical sensor fusion
+                Strategic expansion from ADAS sensor fusion to full autonomous vehicle platform
               </p>
             </CardHeader>
             <CardContent>
@@ -359,30 +361,30 @@ const MarketOpportunity: React.FC = () => {
         >
           <Card className="bg-gradient-to-r from-green-500/5 to-blue-500/5 border-green-500/20">
             <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground">
+                <CardTitle className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground">
                 <TrendingUp className="h-6 w-6 text-green-400" />
-                Transformative Healthcare Impact
+                Transformative Automotive Impact
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-green-400 mb-2">5.2M → 1.5M</div>
-                  <div className="text-sm text-muted-foreground">Annual medical errors in India</div>
+                  <div className="text-4xl font-bold text-green-400 mb-2">$0.3B → $3.3B</div>
+                  <div className="text-sm text-muted-foreground">Market growth by 2030</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">65%</div>
-                  <div className="text-sm text-muted-foreground">Rural population with specialist access</div>
+                  <div className="text-4xl font-bold text-blue-400 mb-2">42.4%</div>
+                  <div className="text-sm text-muted-foreground">CAGR (2023-2030)</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-purple-400 mb-2">₹500Cr</div>
-                  <div className="text-sm text-muted-foreground">Government medical device investment</div>
+                  <div className="text-4xl font-bold text-purple-400 mb-2">115M</div>
+                  <div className="text-sm text-muted-foreground">Connected vehicles by 2025</div>
                 </div>
               </div>
               
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 <Rocket className="h-5 w-5 mr-2" />
-                Explore Full Medical Vision
+                Explore Full Automotive Vision
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </CardContent>

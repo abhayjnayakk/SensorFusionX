@@ -1,9 +1,11 @@
 export type SensorSample = {
   t: number;
-  ecg: number;
-  eeg: number;
-  emg: number;
-  fused: number;
+  lidar: number;    // LiDAR: Distance measurements (0-200m)
+  radar: number;     // RADAR: Velocity and range data (km/h)
+  camera: number;   // Camera: Visual feature confidence (0-1)
+  imu: number;      // IMU: Acceleration/gyroscope magnitude (m/s²)
+  gps: number;      // GPS: Position accuracy signal (0-1)
+  fused: number;   // Fused perception signal
 };
 
 export type QualityMetrics = {
@@ -39,24 +41,40 @@ export function normalize(value: number, min: number, max: number): number {
 
 export function computeQualityMetrics(buffer: SensorSample[]): QualityMetrics {
   const last = buffer.slice(-512);
-  const ecg = last.map((s) => s.ecg);
-  const eeg = last.map((s) => s.eeg);
-  const emg = last.map((s) => s.emg);
+  const lidar = last.map((s) => s.lidar);
+  const radar = last.map((s) => s.radar);
+  const camera = last.map((s) => s.camera);
+  const imu = last.map((s) => s.imu);
+  const gps = last.map((s) => s.gps);
   const fused = last.map((s) => s.fused);
 
-  const noiseEstimate = last.map((s) => s.fused - 0.5 * s.ecg - 0.3 * s.eeg - 0.2 * s.emg);
+  // Noise estimate: difference between fused and ideal weighted combination
+  // Ideal weights: lidar=0.35, radar=0.30, camera=0.20, imu=0.10, gps=0.05
+  const noiseEstimate = last.map((s) => 
+    s.fused - (0.35 * s.lidar + 0.30 * s.radar + 0.20 * s.camera + 0.10 * s.imu + 0.05 * s.gps)
+  );
   const snrDb = computeSnrDb(fused, noiseEstimate);
 
+  // Artifact score: based on signal variability (occlusions, multipath, etc.)
   const artifactStd = rollingStd(fused, 64);
   const artifactScore = normalize(artifactStd, 0.02, 0.2);
 
+  // Drift score: baseline shift detection (sensor calibration drift)
   const drift = Math.abs(average(fused.slice(-128)) - average(fused.slice(0, 128)));
   const driftScore = normalize(drift, 0.0, 0.2);
 
-  const eegStd = rollingStd(eeg, 64);
-  const ecgStd = rollingStd(ecg, 64);
-  const emgStd = rollingStd(emg, 64);
-  const balance = 1 - normalize(Math.abs(ecgStd - eegStd) + Math.abs(eegStd - emgStd), 0.0, 0.6);
+  // Sensor balance: measure of cross-sensor consistency
+  const lidarStd = rollingStd(lidar, 64);
+  const radarStd = rollingStd(radar, 64);
+  const cameraStd = rollingStd(camera, 64);
+  const imuStd = rollingStd(imu, 64);
+  const gpsStd = rollingStd(gps, 64);
+  const balance = 1 - normalize(
+    Math.abs(lidarStd - radarStd) + 
+    Math.abs(radarStd - cameraStd) + 
+    Math.abs(cameraStd - imuStd),
+    0.0, 0.6
+  );
   const fusionConfidence = normalize(snrDb, 5, 25) * 0.6 + (1 - artifactScore) * 0.25 + balance * 0.15;
 
   return {

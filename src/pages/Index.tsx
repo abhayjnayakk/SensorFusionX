@@ -10,8 +10,8 @@ import ResearchValidationBento from "@/components/ResearchValidationBento";
 import HeroSection from "@/components/HeroSection";
 import ProblemSpace from "@/components/ProblemSpace";
 import SolutionFramework from "@/components/SolutionFramework";
-import BiomedicalMVP from "@/components/BiomedicalMVP";
-import IndiaHealthcareContext from "@/components/IndiaHealthcareContext";
+import AutomotiveMVP from "@/components/AutomotiveMVP";
+import AutomotiveMarketContext from "@/components/AutomotiveMarketContext";
 import MarketOpportunity from "@/components/MarketOpportunity";
 
 const Index = () => {
@@ -28,11 +28,11 @@ const Index = () => {
       {/* Solution Framework */}
       <SolutionFramework />
 
-      {/* Biomedical MVP Section */}
-      <BiomedicalMVP />
+      {/* Automotive MVP Section */}
+      <AutomotiveMVP />
 
-      {/* India Healthcare Context */}
-      <IndiaHealthcareContext />
+      {/* Automotive Market Context */}
+      <AutomotiveMarketContext />
 
       {/* Live Demo Section */}
       <section className="py-20 bg-gradient-to-b from-background to-muted/20">
@@ -41,11 +41,11 @@ const Index = () => {
             <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Live{' '}
               <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-                Biomedical Demo
+                Automotive Sensor Fusion Demo
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Real-time multi-modal biosignal fusion demonstration with validated performance metrics
+              Real-time multi-modal sensor fusion for autonomous vehicles with validated performance metrics
             </p>
           </div>
 
@@ -54,16 +54,16 @@ const Index = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <MetricCard
                 icon={Database}
-                title="Data Streams"
-                value="4"
+                title="Sensor Streams"
+                value="5"
                 unit=""
                 status="success"
-                description="ECG, EEG, EMG, Fused"
+                description="LiDAR, RADAR, Camera, IMU, GPS"
               />
               <MetricCard
                 icon={Zap}
                 title="Processing"
-                value="240"
+                value="100"
                 unit="Hz"
                 status="success"
                 description="Sampling rate"
@@ -79,10 +79,10 @@ const Index = () => {
               <MetricCard
                 icon={Gauge}
                 title="Latency"
-                value="4.3"
+                value="10"
                 unit="ms"
                 status="success"
-                description="Processing delay"
+                description="Perception stack delay"
               />
             </div>
           </div>
@@ -119,18 +119,18 @@ const Index = () => {
               <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
                 <Activity className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">Biomedical Sensor Fusion Research</h3>
+              <h3 className="text-2xl font-bold text-foreground">Automotive Sensor Fusion Platform</h3>
             </div>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Transforming India's healthcare crisis through intelligent multi-modal sensor fusion. 
-              From 5.2M annual medical errors to precision care—real-time, validated, reliable.
+              Enabling autonomous and connected vehicles through intelligent multi-modal sensor fusion. 
+              Real-time perception stack with confidence-weighted fusion—validated, reliable, production-ready.
             </p>
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <span>© 2024 Team Utkarsh</span>
               <span>•</span>
-              <span>India Healthcare Innovation</span>
+              <span>Autonomous Vehicle Technology</span>
               <span>•</span>
-              <span>NDHM Compatible</span>
+              <span>Connected Vehicle Solutions</span>
             </div>
           </div>
         </div>

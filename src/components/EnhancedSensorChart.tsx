@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { Activity, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
-type Point = { t: number; ecg: number; eeg: number; emg: number; fused: number };
+type Point = { t: number; lidar: number; radar: number; camera: number; imu: number; gps: number; fused: number };
 
 interface EnhancedSensorChartProps {
   data?: Point[];
@@ -68,7 +68,7 @@ const BlurText: React.FC<{
   );
 };
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = React.memo(({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <motion.div 
@@ -98,7 +98,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     );
   }
   return null;
-};
+});
 
 const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({ 
   data, 
@@ -115,18 +115,22 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
     if (safeData.length === 0) {
       return Array.from({ length: 100 }, (_, i) => ({
         t: i * 0.1,
-        ECG: Math.sin(i * 0.1) * 0.5 + Math.random() * 0.2,
-        EEG: Math.sin(i * 0.15) * 0.3 + Math.random() * 0.1,
-        EMG: Math.sin(i * 0.2) * 0.4 + Math.random() * 0.15,
-        Fused: Math.sin(i * 0.12) * 0.6 + Math.random() * 0.1,
+        LiDAR: 50.0 * Math.sin(i * 0.05) + Math.random() * 5.0,
+        RADAR: 30.0 * Math.sin(i * 0.1) + Math.random() * 3.0,
+        Camera: Math.max(0, Math.min(1, 0.7 * Math.sin(i * 0.03) + Math.random() * 0.1)),
+        IMU: 2.0 * Math.sin(i * 0.08) + Math.random() * 0.3,
+        GPS: Math.max(0.3, Math.min(1.0, 0.9 * Math.sin(i * 0.01) + Math.random() * 0.15)),
+        Fused: 20.0 * Math.sin(i * 0.06) + Math.random() * 2.0,
       }));
     }
-    return safeData.slice(-300).map((d) => ({
+    return safeData.slice(-200).map((d) => ({
       t: Number(d.t.toFixed(1)),
-      ECG: Number(d.ecg.toFixed(3)),
-      EEG: Number(d.eeg.toFixed(3)),
-      EMG: Number(d.emg.toFixed(3)),
-      Fused: Number(d.fused.toFixed(3)),
+      LiDAR: Number(d.lidar.toFixed(1)),
+      RADAR: Number(d.radar.toFixed(1)),
+      Camera: Number(d.camera.toFixed(3)),
+      IMU: Number(d.imu.toFixed(2)),
+      GPS: Number(d.gps.toFixed(3)),
+      Fused: Number(d.fused.toFixed(2)),
     }));
   }, [safeData]);
 
@@ -144,9 +148,11 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
     };
 
     return {
-      ECG: calculateTrend('ECG'),
-      EEG: calculateTrend('EEG'),
-      EMG: calculateTrend('EMG'),
+      LiDAR: calculateTrend('LiDAR'),
+      RADAR: calculateTrend('RADAR'),
+      Camera: calculateTrend('Camera'),
+      IMU: calculateTrend('IMU'),
+      GPS: calculateTrend('GPS'),
       Fused: calculateTrend('Fused')
     };
   }, [chartData]);
@@ -160,10 +166,12 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
   };
 
   const signalColors = {
-    ECG: '#ef4444',
-    EEG: '#a855f7', 
-    EMG: '#10b981',
-    Fused: '#3b82f6'
+    LiDAR: '#3b82f6',
+    RADAR: '#10b981',
+    Camera: '#f59e0b',
+    IMU: '#a855f7',
+    GPS: '#06b6d4',
+    Fused: '#ef4444'
   };
 
   return (
@@ -196,7 +204,7 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              Live biomedical signal monitoring
+              Live automotive sensor monitoring
             </motion.p>
           </div>
         </div>
@@ -246,33 +254,58 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
             
             <Line
               type="monotone"
-              dataKey="ECG"
-              stroke={signalColors.ECG}
+              dataKey="LiDAR"
+              stroke={signalColors.LiDAR}
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: signalColors.ECG }}
+              isAnimationActive={false}
+              activeDot={{ r: 4, fill: signalColors.LiDAR }}
               className="cursor-pointer"
-              onClick={() => setSelectedSignal(selectedSignal === 'ECG' ? null : 'ECG')}
+              onClick={() => setSelectedSignal(selectedSignal === 'LiDAR' ? null : 'LiDAR')}
             />
             <Line
               type="monotone"
-              dataKey="EEG"
-              stroke={signalColors.EEG}
+              dataKey="RADAR"
+              stroke={signalColors.RADAR}
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: signalColors.EEG }}
+              isAnimationActive={false}
+              activeDot={{ r: 4, fill: signalColors.RADAR }}
               className="cursor-pointer"
-              onClick={() => setSelectedSignal(selectedSignal === 'EEG' ? null : 'EEG')}
+              onClick={() => setSelectedSignal(selectedSignal === 'RADAR' ? null : 'RADAR')}
             />
             <Line
               type="monotone"
-              dataKey="EMG"
-              stroke={signalColors.EMG}
+              dataKey="Camera"
+              stroke={signalColors.Camera}
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: signalColors.EMG }}
+              isAnimationActive={false}
+              activeDot={{ r: 4, fill: signalColors.Camera }}
               className="cursor-pointer"
-              onClick={() => setSelectedSignal(selectedSignal === 'EMG' ? null : 'EMG')}
+              onClick={() => setSelectedSignal(selectedSignal === 'Camera' ? null : 'Camera')}
+            />
+            <Line
+              type="monotone"
+              dataKey="IMU"
+              stroke={signalColors.IMU}
+              strokeWidth={2}
+              dot={false}
+              isAnimationActive={false}
+              activeDot={{ r: 4, fill: signalColors.IMU }}
+              className="cursor-pointer"
+              onClick={() => setSelectedSignal(selectedSignal === 'IMU' ? null : 'IMU')}
+            />
+            <Line
+              type="monotone"
+              dataKey="GPS"
+              stroke={signalColors.GPS}
+              strokeWidth={2}
+              dot={false}
+              isAnimationActive={false}
+              activeDot={{ r: 4, fill: signalColors.GPS }}
+              className="cursor-pointer"
+              onClick={() => setSelectedSignal(selectedSignal === 'GPS' ? null : 'GPS')}
             />
             <Line
               type="monotone"
@@ -280,6 +313,7 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
               stroke={signalColors.Fused}
               strokeWidth={3}
               dot={false}
+              isAnimationActive={false}
               activeDot={{ r: 5, fill: signalColors.Fused }}
               className="cursor-pointer"
               onClick={() => setSelectedSignal(selectedSignal === 'Fused' ? null : 'Fused')}
@@ -291,7 +325,7 @@ const EnhancedSensorChart: React.FC<EnhancedSensorChartProps> = ({
       {/* Trend Indicators */}
       {showTrends && (
         <motion.div 
-          className="grid grid-cols-4 gap-2"
+          className="grid grid-cols-6 gap-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}

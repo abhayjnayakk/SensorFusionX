@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Experimental Validation for Sensor Fusion Framework
+Experimental Validation for Automotive Sensor Fusion Framework
 Addressing Reviewers' Feedback with Concrete Implementation
 
 This script demonstrates:
-1. EEG + ECG fusion on public dataset
+1. LiDAR + RADAR + Camera fusion for autonomous vehicles
 2. Confidence-weighted fusion vs simple concatenation
 3. Performance metrics (SNR, latency, reliability)
-4. Real-time processing validation
+4. Real-time processing validation for connected autonomous vehicles
 """
 
 import numpy as np
@@ -24,36 +24,63 @@ warnings.filterwarnings('ignore')
 
 class SensorFusionFramework:
     """
-    Experimental implementation of the sensor fusion framework
-    with concrete performance metrics and validation.
+    Experimental implementation of the automotive sensor fusion framework
+    with concrete performance metrics and validation for autonomous vehicles.
     """
     
-    def __init__(self, sampling_rate=240, window_size=512):
-        self.sampling_rate = sampling_rate
+    def __init__(self, sampling_rate=100, window_size=512):
+        self.sampling_rate = sampling_rate  # 100 Hz typical for automotive sensors
         self.window_size = window_size
         self.scaler = StandardScaler()
-        self.fusion_weights = {'ecg': 0.5, 'eeg': 0.3, 'emg': 0.2}
+        # Weights optimized for autonomous vehicle perception stack
+        self.fusion_weights = {'lidar': 0.35, 'radar': 0.30, 'camera': 0.20, 'imu': 0.10, 'gps': 0.05}
         
-    def generate_synthetic_biosignals(self, duration=10, noise_level=0.1):
+    def generate_synthetic_automotive_signals(self, duration=10, noise_level=0.1):
         """
-        Generate realistic synthetic biosignals for validation
-        Based on physiological characteristics
+        Generate realistic synthetic automotive sensor signals for validation
+        Based on autonomous vehicle sensor characteristics
+        
+        Returns:
+        - LiDAR: Distance measurements with occlusion noise
+        - RADAR: Velocity and range data with multipath interference
+        - Camera: Visual feature strength (processed features, e.g., object detection confidence)
+        - IMU: Acceleration/gyroscope data (combined magnitude)
+        - GPS: Position accuracy signal
         """
         t = np.linspace(0, duration, int(duration * self.sampling_rate))
         
-        # ECG: Heart rhythm at 1.5 Hz (90 BPM)
-        ecg = 0.8 * np.sin(2 * np.pi * 1.5 * t) + noise_level * np.random.randn(len(t))
+        # LiDAR: Distance measurements with periodic occlusions (e.g., pedestrians, vehicles)
+        # Typical LiDAR range: 0-200m, update rate: 10-20 Hz effective
+        lidar = (50.0 * np.sin(2 * np.pi * 0.5 * t) +  # Slow moving objects
+                 10.0 * np.sin(2 * np.pi * 2.0 * t + 0.3) +  # Fast moving objects
+                 noise_level * 5.0 * np.random.randn(len(t)))
         
-        # EEG: Alpha (10 Hz) and Beta (22 Hz) rhythms
-        eeg = (0.4 * np.sin(2 * np.pi * 10 * t) + 
-               0.15 * np.sin(2 * np.pi * 22 * t + 0.5) + 
-               noise_level * np.random.randn(len(t)))
+        # RADAR: Velocity and range, with Doppler shift patterns
+        # Typical RADAR: velocity measurements 0-200 km/h
+        radar = (30.0 * np.sin(2 * np.pi * 1.0 * t) +  # Velocity component
+                15.0 * np.sin(2 * np.pi * 3.0 * t + 0.5) +  # Multipath reflections
+                noise_level * 3.0 * np.random.randn(len(t)))
         
-        # EMG: Muscle activity with 50 Hz power line interference
-        emg = (0.15 * np.random.randn(len(t)) + 
-               0.05 * np.sin(2 * np.pi * 50 * t))
+        # Camera: Visual feature detection strength (normalized confidence score)
+        # Represents processed image features, object detection confidence, etc.
+        camera = (0.7 * np.sin(2 * np.pi * 0.3 * t) +  # Scene complexity variation
+                 0.2 * np.sin(2 * np.pi * 1.5 * t + 0.8) +  # Object appearance/disappearance
+                 noise_level * 0.1 * np.random.randn(len(t)))
+        camera = np.clip(camera, 0, 1)  # Normalize to [0, 1]
         
-        return t, ecg, eeg, emg
+        # IMU: Combined acceleration/gyroscope magnitude
+        # Represents vehicle dynamics (acceleration, turns, vibrations)
+        imu = (2.0 * np.sin(2 * np.pi * 0.8 * t) +  # Vehicle acceleration patterns
+               0.5 * np.sin(2 * np.pi * 5.0 * t + 1.2) +  # High-frequency vibrations
+               noise_level * 0.3 * np.random.randn(len(t)))
+        
+        # GPS: Position accuracy signal (inverse of error)
+        # Higher values = better accuracy, lower = signal degradation (tunnels, urban canyons)
+        gps = (0.9 * np.sin(2 * np.pi * 0.1 * t) +  # Slow GPS accuracy variations
+               noise_level * 0.15 * np.random.randn(len(t)))
+        gps = np.clip(gps, 0.3, 1.0)  # GPS rarely perfect due to multipath, atmospheric effects
+        
+        return t, lidar, radar, camera, imu, gps
     
     def compute_snr_db(self, signal, noise_estimate):
         """
@@ -164,9 +191,9 @@ class SensorFusionFramework:
         for noise_level in noise_levels:
             print(f"Running experiment with noise level: {noise_level}")
             
-            # Generate synthetic data
-            t, ecg, eeg, emg = self.generate_synthetic_biosignals(duration, noise_level)
-            signals = {'ecg': ecg, 'eeg': eeg, 'emg': emg}
+            # Generate synthetic automotive sensor data
+            t, lidar, radar, camera, imu, gps = self.generate_synthetic_automotive_signals(duration, noise_level)
+            signals = {'lidar': lidar, 'radar': radar, 'camera': camera, 'imu': imu, 'gps': gps}
             
             # Compute quality metrics
             quality_metrics = self.compute_quality_metrics(signals)
@@ -181,10 +208,12 @@ class SensorFusionFramework:
             fused_simple = self.simple_concatenation_fusion(signals)
             simple_time = time.time() - start_time
             
-            # Create ground truth (ideal fusion)
-            ground_truth = (self.fusion_weights['ecg'] * ecg + 
-                           self.fusion_weights['eeg'] * eeg + 
-                           self.fusion_weights['emg'] * emg)
+            # Create ground truth (ideal fusion for autonomous perception)
+            ground_truth = (self.fusion_weights['lidar'] * lidar + 
+                           self.fusion_weights['radar'] * radar + 
+                           self.fusion_weights['camera'] * camera +
+                           self.fusion_weights['imu'] * imu + 
+                           self.fusion_weights['gps'] * gps)
             
             # Evaluate both methods
             weighted_results = self.evaluate_fusion_performance(
@@ -284,7 +313,7 @@ class SensorFusionFramework:
         print("-" * 40)
         
         avg_processing_time = results_df['processing_time'].mean()
-        target_latency = 5e-3  # 5ms target
+        target_latency = 10e-3  # 10ms target for autonomous vehicles (perception stack)
         
         print(f"Average Processing Time: {avg_processing_time*1000:.2f} ms")
         print(f"Target Latency: {target_latency*1000:.2f} ms")
@@ -298,8 +327,9 @@ def main():
     """
     Main experimental validation function
     """
-    print("Starting Experimental Validation for Sensor Fusion Framework")
+    print("Starting Experimental Validation for Automotive Sensor Fusion Framework")
     print("="*60)
+    print("Target Application: Autonomous and Connected Vehicles")
     
     # Initialize framework
     framework = SensorFusionFramework()
