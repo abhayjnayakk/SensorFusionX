@@ -1,0 +1,191 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\begin{document}
+
+\begin{algorithm}
+\caption{Confidence-Weighted Multimodal Sensor Fusion}
+\label{alg:confidence_fusion}
+\begin{algorithmic}[1]
+\REQUIRE Sensor streams $X_1, X_2, \ldots, X_N$, window size $W$, SNR threshold $\theta_{SNR}$
+\ENSURE Fused signal $\hat{X}_{fused}$
+
+\STATE \textbf{Initialize:} $t = 0$, confidence scores $C_i(0) = 1$ for all $i$
+
+\WHILE{data available}
+    \FOR{each sensor stream $i = 1$ to $N$}
+        \STATE \textbf{Signal Quality Assessment:}
+        \STATE $P_{signal}(t) = \text{Power}(X_i[t-W:t])$
+        \STATE $P_{noise}(t) = \text{Power}(X_i[t-W:t] - \text{Detrend}(X_i[t-W:t]))$
+        \STATE $\text{SNR}_i(t) = 10 \log_{10} \frac{P_{signal}(t)}{P_{noise}(t)}$
+        
+        \STATE \textbf{Artifact Detection:}
+        \IF{$\text{SNR}_i(t) < \theta_{SNR}$}
+            \STATE $\text{Artifact\_Flag}_i(t) = 1$
+        \ELSE
+            \STATE $\text{Artifact\_Flag}_i(t) = 0$
+        \ENDIF
+        
+        \STATE \textbf{High-Frequency Analysis (for EEG):}
+        \IF{sensor type is EEG}
+            \STATE $P_{high}(t) = \int_{30\text{Hz}}^{100\text{Hz}} S_i(f,t) df$
+            \IF{$P_{high}(t) > \theta_{artifact}$}
+                \STATE $\text{EMG\_Contamination}_i(t) = 1$
+            \ELSE
+                \STATE $\text{EMG\_Contamination}_i(t) = 0$
+            \ENDIF
+        \ENDIF
+        
+        \STATE \textbf{Confidence Score Calculation:}
+        \STATE $C_i(t) = \frac{1}{1 + \exp(-\alpha(\text{SNR}_i(t) - \theta_{SNR}))}$
+        \STATE $C_i(t) = C_i(t) \cdot (1 - \text{Artifact\_Flag}_i(t))$
+        \IF{sensor type is EEG}
+            \STATE $C_i(t) = C_i(t) \cdot (1 - \text{EMG\_Contamination}_i(t))$
+        \ENDIF
+    \ENDFOR
+    
+    \STATE \textbf{Temporal Synchronization:}
+    \FOR{each pair $(i,j)$ of sensor streams}
+        \STATE $\tau_{ij} = \arg\max_{\tau} \text{corr}(X_i(t), X_j(t+\tau))$
+        \STATE $X_j^{sync}(t) = X_j(t + \tau_{ij})$
+    \ENDFOR
+    
+    \STATE \textbf{Tokenization:}
+    \FOR{each sensor stream $i = 1$ to $N$}
+        \STATE $\text{Tokens}_i = \text{SlidingWindow}(X_i^{sync}, \text{window\_size}=L, \text{stride}=S)$
+    \ENDFOR
+    
+    \STATE \textbf{Transformer Encoding:}
+    \FOR{each sensor stream $i = 1$ to $N$}
+        \STATE $\text{Encoded}_i = \text{TransformerEncoder}(\text{Tokens}_i)$
+    \ENDFOR
+    
+    \STATE \textbf{Confidence-Weighted Fusion:}
+    \STATE $w_i(t) = \frac{C_i(t)}{\sum_{j=1}^{N} C_j(t)}$ \COMMENT{Normalize confidence scores}
+    \STATE $\hat{X}_{fused}(t) = \sum_{i=1}^{N} w_i(t) \cdot \text{Encoded}_i$
+    
+    \STATE \textbf{Multi-Head Attention:}
+    \STATE $\text{Query} = \hat{X}_{fused}(t) \cdot W_Q$
+    \STATE $\text{Key} = \text{Concat}(\text{Encoded}_1, \ldots, \text{Encoded}_N) \cdot W_K$
+    \STATE $\text{Value} = \text{Concat}(\text{Encoded}_1, \ldots, \text{Encoded}_N) \cdot W_V$
+    \STATE $\text{Attention} = \text{Softmax}\left(\frac{\text{Query} \cdot \text{Key}^T}{\sqrt{d_k}}\right) \cdot \text{Value}$
+    
+    \STATE \textbf{Output:}
+    \STATE $\hat{X}_{fused}(t) = \text{Attention} + \text{LayerNorm}(\hat{X}_{fused}(t))$
+    
+    \STATE $t = t + 1$
+\ENDWHILE
+
+\RETURN $\hat{X}_{fused}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Real-Time Signal Quality Assessment}
+\label{alg:sqa}
+\begin{algorithmic}[1]
+\REQUIRE Raw signal $X(t)$, window size $W$, artifact threshold $\theta_{artifact}$
+\ENSURE SNR value $\text{SNR}(t)$, artifact flags, confidence score $C(t)$
+
+\STATE \textbf{Initialize:} $t = 0$
+
+\WHILE{signal available}
+    \STATE \textbf{Extract Window:} $X_{window} = X[t-W:t]$
+    
+    \STATE \textbf{Baseline Correction:}
+    \STATE $X_{detrended} = X_{window} - \text{PolynomialDetrend}(X_{window}, \text{order}=2)$
+    
+    \STATE \textbf{Power Spectral Density:}
+    \STATE $S(f) = |\text{FFT}(X_{detrended})|^2$
+    
+    \STATE \textbf{Signal Power Estimation:}
+    \STATE $P_{signal} = \int_{f_{min}}^{f_{max}} S(f) df$ \COMMENT{Signal band power}
+    
+    \STATE \textbf{Noise Power Estimation:}
+    \STATE $P_{noise} = \int_{f_{noise\_low}}^{f_{noise\_high}} S(f) df$ \COMMENT{Noise band power}
+    
+    \STATE \textbf{SNR Calculation:}
+    \STATE $\text{SNR}(t) = 10 \log_{10} \frac{P_{signal}}{P_{noise}}$
+    
+    \STATE \textbf{Artifact Detection:}
+    \STATE $\sigma_{rolling} = \text{RollingStd}(X_{detrended}, \text{window}=W/4)$
+    \IF{$\sigma_{rolling} > \theta_{artifact}$}
+        \STATE $\text{Artifact\_Flag} = 1$
+    \ELSE
+        \STATE $\text{Artifact\_Flag} = 0$
+    \ENDIF
+    
+    \STATE \textbf{High-Frequency Analysis:}
+    \STATE $P_{high} = \int_{30\text{Hz}}^{100\text{Hz}} S(f) df$
+    \IF{$P_{high} > \theta_{high\_freq}$}
+        \STATE $\text{EMG\_Contamination} = 1$
+    \ELSE
+        \STATE $\text{EMG\_Contamination} = 0$
+    \ENDIF
+    
+    \STATE \textbf{Confidence Score:}
+    \STATE $C(t) = \frac{1}{1 + \exp(-\alpha(\text{SNR}(t) - \theta_{SNR}))}$
+    \STATE $C(t) = C(t) \cdot (1 - \text{Artifact\_Flag}) \cdot (1 - \text{EMG\_Contamination})$
+    
+    \STATE $t = t + 1$
+\ENDWHILE
+
+\RETURN $\text{SNR}(t)$, $\text{Artifact\_Flag}$, $C(t)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Transformer-Based Multimodal Fusion}
+\label{alg:transformer_fusion}
+\begin{algorithmic}[1]
+\REQUIRE Encoded features $\text{Encoded}_1, \ldots, \text{Encoded}_N$, confidence scores $C_1, \ldots, C_N$
+\ENSURE Fused representation $\hat{X}_{fused}$
+
+\STATE \textbf{Initialize:} $d_{model} = 512$, $h = 8$ \COMMENT{Model dimension and attention heads}
+
+\FOR{each sensor stream $i = 1$ to $N$}
+    \STATE \textbf{Positional Encoding:}
+    \STATE $PE_i = \text{PositionalEncoding}(\text{Encoded}_i)$
+    
+    \STATE \textbf{Confidence-Weighted Input:}
+    \STATE $X_i^{weighted} = C_i \cdot PE_i$
+    
+    \STATE \textbf{Multi-Head Self-Attention:}
+    \STATE $Q_i = X_i^{weighted} \cdot W_Q^i$
+    \STATE $K_i = X_i^{weighted} \cdot W_K^i$
+    \STATE $V_i = X_i^{weighted} \cdot W_V^i$
+    \STATE $\text{Attention}_i = \text{Softmax}\left(\frac{Q_i \cdot K_i^T}{\sqrt{d_k}}\right) \cdot V_i$
+    
+    \STATE \textbf{Feed-Forward Network:}
+    \STATE $\text{FFN}_i = \text{ReLU}(X_i^{weighted} \cdot W_1 + b_1) \cdot W_2 + b_2$
+    
+    \STATE \textbf{Layer Normalization:}
+    \STATE $\text{Encoded}_i^{final} = \text{LayerNorm}(\text{Attention}_i + \text{FFN}_i)$
+\ENDFOR
+
+\STATE \textbf{Cross-Modal Attention:}
+\STATE $X_{concat} = \text{Concat}(\text{Encoded}_1^{final}, \ldots, \text{Encoded}_N^{final})$
+
+\FOR{head $h = 1$ to $H$}
+    \STATE $Q_h = X_{concat} \cdot W_Q^h$
+    \STATE $K_h = X_{concat} \cdot W_K^h$
+    \STATE $V_h = X_{concat} \cdot W_V^h$
+    \STATE $\text{Attention}_h = \text{Softmax}\left(\frac{Q_h \cdot K_h^T}{\sqrt{d_k}}\right) \cdot V_h$
+\ENDFOR
+
+\STATE \textbf{Multi-Head Concatenation:}
+\STATE $\text{MultiHead} = \text{Concat}(\text{Attention}_1, \ldots, \text{Attention}_H) \cdot W_O$
+
+\STATE \textbf{Final Fusion:}
+\STATE $\hat{X}_{fused} = \text{LayerNorm}(\text{MultiHead} + X_{concat})$
+
+\RETURN $\hat{X}_{fused}$
+\end{algorithmic}
+\end{algorithm}
+
+\end{document}
+
+
