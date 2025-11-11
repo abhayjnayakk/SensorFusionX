@@ -29,14 +29,14 @@ const ResearchVisualization: React.FC = () => {
   const researchData: ResearchData = useMemo(() => ({
     methodology: [
       {
-        name: "Sensor Data Acquisition",
-        description: "Multi-modal automotive sensor data collection at 100Hz",
+        name: "Signal Acquisition",
+        description: "Multi-modal sensor data collection at 240Hz",
         performance: 99.2,
         color: "hsl(var(--primary))"
       },
       {
         name: "Preprocessing",
-        description: "Noise reduction and interference filtering",
+        description: "Noise reduction and artifact detection",
         performance: 96.3,
         color: "hsl(var(--success))"
       },
@@ -48,63 +48,63 @@ const ResearchVisualization: React.FC = () => {
       },
       {
         name: "Quality Assessment",
-        description: "Real-time SNR and reliability scoring",
+        description: "Real-time SNR and artifact scoring",
         performance: 94.7,
         color: "hsl(var(--destructive))"
       }
     ],
     experimentalResults: [
       {
-        metric: "Detection Accuracy",
-        baseline: 85.1,
-        improved: 94.7,
-        improvement: 11.3,
-        unit: "%"
+        metric: "SNR Improvement",
+        baseline: 15.1,
+        improved: 18.7,
+        improvement: 23.4,
+        unit: "dB"
       },
       {
-        metric: "False Positive Rate",
-        baseline: 12.4,
-        improved: 6.8,
-        improvement: -45.2,
-        unit: "%"
+        metric: "R² Score",
+        baseline: 0.712,
+        improved: 0.847,
+        improvement: 18.7,
+        unit: ""
       },
       {
-        metric: "Processing Latency",
+        metric: "Processing Time",
         baseline: 8.7,
         improved: 4.3,
         improvement: -50.6,
         unit: "ms"
       },
       {
-        metric: "Sensor Reliability",
-        baseline: 91.2,
-        improved: 97.3,
-        improvement: 6.7,
+        metric: "Artifact Detection",
+        baseline: 89.2,
+        improved: 96.3,
+        improvement: 7.9,
         unit: "%"
       }
     ],
     datasetCharacteristics: [
       {
-        type: "LiDAR Data",
-        samples: 25000,
+        type: "ECG Signals",
+        samples: 12500,
         quality: 94.2,
         noise: 5.8
       },
       {
-        type: "RADAR Data",
-        samples: 30000,
+        type: "EEG Signals", 
+        samples: 18750,
         quality: 91.7,
         noise: 8.3
       },
       {
-        type: "Camera Data",
-        samples: 20000,
+        type: "EMG Signals",
+        samples: 8750,
         quality: 88.9,
         noise: 11.1
       },
       {
-        type: "Fused Perception",
-        samples: 75000,
+        type: "Fused Output",
+        samples: 40000,
         quality: 96.8,
         noise: 3.2
       }
@@ -118,7 +118,7 @@ const ResearchVisualization: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-primary" />
-            Automotive Sensor Fusion Pipeline
+            Research Methodology Pipeline
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -163,7 +163,7 @@ const ResearchVisualization: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-success" />
-            Performance Validation Results
+            Experimental Results Comparison
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -224,7 +224,7 @@ const ResearchVisualization: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Database className="h-5 w-5 text-primary" />
-            Sensor Data Characteristics & Quality Metrics
+            Dataset Characteristics & Quality Metrics
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -279,26 +279,26 @@ const ResearchVisualization: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-warning" />
-            Autonomous Vehicle Performance Metrics
+            Performance Metrics Summary
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center space-y-2">
-              <div className="text-2xl font-bold text-success">11.3%</div>
-              <div className="text-xs text-muted-foreground">Detection Accuracy</div>
+              <div className="text-2xl font-bold text-success">23.4%</div>
+              <div className="text-xs text-muted-foreground">SNR Improvement</div>
             </div>
             <div className="text-center space-y-2">
               <div className="text-2xl font-bold text-primary">4.3ms</div>
               <div className="text-xs text-muted-foreground">Processing Latency</div>
             </div>
             <div className="text-center space-y-2">
-              <div className="text-2xl font-bold text-warning">97.3%</div>
-              <div className="text-xs text-muted-foreground">Sensor Reliability</div>
+              <div className="text-2xl font-bold text-warning">96.3%</div>
+              <div className="text-xs text-muted-foreground">Artifact Detection</div>
             </div>
             <div className="text-center space-y-2">
               <div className="text-2xl font-bold text-destructive">99.9%</div>
-              <div className="text-xs text-muted-foreground">System Uptime</div>
+              <div className="text-xs text-muted-foreground">System Reliability</div>
             </div>
           </div>
         </CardContent>

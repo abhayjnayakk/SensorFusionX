@@ -66,7 +66,7 @@ function SensorChartBase({ data }: { data?: Point[] }) {
               Live Sensor Streams
             </h3>
             <p className="text-xs text-muted-foreground">
-              Real-time automotive sensor fusion
+              Real-time biosignal monitoring
             </p>
           </div>
         </div>

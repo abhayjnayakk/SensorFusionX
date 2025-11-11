@@ -37,15 +37,15 @@ const SolutionFramework: React.FC = () => {
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       features: [
-        "Advanced noise reduction and interference filtering",
-        "Adaptive filtering preserves vehicle dynamics",
-        "Continuous quality assessment (SNR, drift, reliability)",
-        "100 Hz sampling rate for real-time autonomous driving"
+        "Advanced noise reduction and artifact removal",
+        "Adaptive filtering preserves clinical features",
+        "Continuous quality assessment (SNR, drift, artifacts)",
+        "240 Hz sampling rate for high-fidelity capture"
       ],
       metrics: [
-        { label: "Detection Accuracy", value: "94.7%", color: "text-green-400" },
-        { label: "False Positives", value: "6.8%", color: "text-blue-400" },
-        { label: "Sensor Reliability", value: "97.3%", color: "text-purple-400" }
+        { label: "SNR Quality", value: "24.5 dB", color: "text-green-400" },
+        { label: "Artifact Detection", value: "12.3%", color: "text-blue-400" },
+        { label: "Drift Compensation", value: "8.7%", color: "text-purple-400" }
       ]
     },
     {
@@ -73,24 +73,24 @@ const SolutionFramework: React.FC = () => {
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30",
       features: [
-        "87% fusion confidence under realistic driving conditions",
-        "Interpretable perception recommendations",
-        "Uncertainty quantification for autonomous driving trust",
+        "87% fusion confidence under realistic noise",
+        "Interpretable diagnostic recommendations",
+        "Uncertainty quantification for clinical trust",
         "Real-time performance (4.3ms latency)"
       ],
       metrics: [
         { label: "Processing Latency", value: "4.3ms", color: "text-green-400" },
         { label: "System Uptime", value: "99.9%", color: "text-blue-400" },
-        { label: "Perception Accuracy", value: "94.7%", color: "text-purple-400" }
+        { label: "Clinical Accuracy", value: "87.2%", color: "text-purple-400" }
       ]
     }
   ];
 
   const performanceComparison = [
-    { method: "Simple Averaging", accuracy: 68.3, latency: 3.1, robustness: 52.4, color: "text-red-400" },
+    { method: "Simple Concatenation", accuracy: 68.3, latency: 3.1, robustness: 52.4, color: "text-red-400" },
     { method: "Kalman Filter", accuracy: 74.6, latency: 5.8, robustness: 63.7, color: "text-orange-400" },
-    { method: "Neural Networks", accuracy: 82.1, latency: 12.4, robustness: 71.3, color: "text-blue-400" },
-    { method: "Our Framework", accuracy: 94.7, latency: 4.3, robustness: 87.0, color: "text-green-400", highlight: true }
+    { method: "Deep Learning", accuracy: 82.1, latency: 12.4, robustness: 71.3, color: "text-blue-400" },
+    { method: "Our Framework", accuracy: 87.2, latency: 4.3, robustness: 87.0, color: "text-green-400", highlight: true }
   ];
 
   return (
@@ -119,8 +119,8 @@ const SolutionFramework: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A three-layer architecture that transforms noisy automotive sensor data into confident perception insights
-            through real-time processing, cross-modal fusion, and confidence-weighted decision support for autonomous vehicles.
+            A three-layer architecture that transforms noisy biosignals into confident clinical insights 
+            through real-time processing, cross-modal fusion, and confidence-weighted decision support.
           </p>
         </motion.div>
 

@@ -23,7 +23,7 @@ import {
   Rocket
 } from 'lucide-react';
 
-const TechnologyRoadmap: React.FC = () => {
+const MarketOpportunity: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -167,17 +167,17 @@ const TechnologyRoadmap: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <Badge variant="outline" className="mb-4 px-4 py-2 text-sm font-medium border-primary/30 text-primary">
-            Technology Roadmap
+            Market Opportunity
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Automotive Sensor Fusion Technology Roadmap:{' '}
+            Automotive Sensor Fusion Market Leadership:{' '}
             <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-              From ADAS to Full Autonomy
+              42.4% CAGR Growth Opportunity
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our multi-phase development roadmap for automotive sensor fusion technology, progressing from current
-            ADAS applications to full autonomous vehicle perception stacks and Software-Defined Vehicle platforms.
+            The automotive sensor fusion market growing from $0.3B (2023) to $3.3B by 2030, driven by ADAS adoption, 
+            autonomous vehicle development, and Software-Defined Vehicle (SDV) transformation.
           </p>
         </motion.div>
 
@@ -395,4 +395,4 @@ const TechnologyRoadmap: React.FC = () => {
   );
 };
 
-export default TechnologyRoadmap;
+export default MarketOpportunity;
